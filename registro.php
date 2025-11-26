@@ -109,7 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <?php endif; ?>
 
             <form action="registro.php" method="POST">
-                <fieldset>
                     <legend><strong>Datos del Solicitante</strong></legend>
 
                     <label for="nombre">Nombre:</label>
@@ -151,8 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <option value="Mecánica">Mecánica</option>
                         <option value="Otra">Otra</option>
                     </select>
-                </fieldset>
-
                 <br>
                 <button type="submit">Registrarse</button>
             </form>

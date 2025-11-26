@@ -119,7 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <select id="aula" name="aula" required>
 
             <option value="">-- Seleccione un aula --</option>
-
             <?php
             // Traer aulas desde BD
             $aulas = $conexion->query("SELECT id_aula, nombre_aula, capacidad FROM Aulas");
