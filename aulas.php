@@ -122,46 +122,6 @@ if (!isset($_SESSION["id_estudiante"])) {
 
             </div>
 
-            <br>
-            <h3>Tabla de Aulas Disponibles</h3>
-
-            <table border="1" style="border-collapse: collapse; width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Nombre/Número del aula</th>
-                        <th>Capacidad de personas</th>
-                        <th>Equipamiento</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Aula 1</td>
-                        <td>10</td>
-                        <td>Televisor y pizarra</td>
-                        <td>Disponible</td>
-                        <td><a href="reservar.php"><button>Reservar</button></a></td>
-                    </tr>
-
-                    <tr>
-                        <td>Aula 2</td>
-                        <td>8</td>
-                        <td>Televisor y pizarra</td>
-                        <td>Ocupada</td>
-                        <td><button disabled>Reservar</button></td>
-                    </tr>
-
-                    <tr>
-                        <td>Aula 3</td>
-                        <td>6</td>
-                        <td>Televisor y pizarra</td>
-                        <td>Disponible</td>
-                        <td><a href="reservar.php"><button>Reservar</button></a></td>
-                    </tr>
-                </tbody>
-            </table>
 
             <br>
 
