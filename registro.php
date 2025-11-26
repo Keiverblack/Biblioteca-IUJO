@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($stmt2->execute()) {
         $_SESSION["success"] = "Registro exitoso. Ahora puede iniciar sesión.";
-        header("Location: registro.php");
+        header("Location: login.php");
         exit;
     } else {
         $_SESSION["error"] = "Hubo un problema al registrar. Inténtelo nuevamente.";
