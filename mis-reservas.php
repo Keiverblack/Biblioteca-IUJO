@@ -131,8 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <ul>
         <li><a href="aulas.php">Aulas</a></li>
         <li><a class="active" href="reservar.php">Reservar Cubículo</a></li>
-        <!-- Ya no necesitas el link a mis-reservas si lo muestras aqui, pero lo dejo por si acaso -->
-        <li><a href="mis-reservas.php">Mis Reservas</a></li> 
         <li><a href="logout.php">Cerrar Sesión</a></li>
     </ul>
 </nav>

@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($stmt->execute()) {
         $_SESSION["success"] = "Reserva realizada exitosamente.";
-        header("Location: mis-reservas.html");
+        header("Location: mis-reservas.php");
         exit;
     } else {
         $_SESSION["error"] = "Hubo un error al guardar la reserva: " . $stmt->error;
