@@ -14,7 +14,8 @@ CREATE TABLE Aulas (
     id_aula INT AUTO_INCREMENT PRIMARY KEY,
     nombre_aula VARCHAR(50) NOT NULL,
     capacidad INT NOT NULL,
-    ubicacion VARCHAR(100) NOT NULL
+    televisor ENUM('si','no') DEFAULT 'no',
+    pizarra ENUM('si','no') DEFAULT 'no'
 );
 
 -- Tabla de reservas
