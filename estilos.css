@@ -1,0 +1,366 @@
+/* =========================================
+   VARIABLES Y CONFIGURACIÓN GLOBAL
+   ========================================= */
+:root {
+    --primary-red: #d50000;   /* Rojo intenso */
+    --hover-red: #b71c1c;     /* Rojo más oscuro para hover */
+    --text-black: #1a1a1a;    /* Negro suave para lectura */
+    --pure-black: #000000;    /* Negro puro para contrastes */
+    --white: #ffffff;
+    --light-gray: #f4f4f4;    /* Para fondos secundarios */
+    --border-color: #ddd;
+    --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--text-black);
+    line-height: 1.6;
+}
+
+/* =========================================
+   ENCABEZADO Y NAVEGACIÓN
+   ========================================= */
+header {
+    background-color: var(--white);
+    border-bottom: 4px solid var(--primary-red);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Menú de Navegación */
+.main-nav {
+    background-color: var(--pure-black);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.main-nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover {
+    background-color: var(--primary-red);
+    color: var(--white);
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL Y TIPOGRAFÍA
+   ========================================= */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    min-height: 80vh;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 40px 0;
+}
+
+/* =========================================
+   FORMULARIOS Y INPUTS
+   ========================================= */
+form {
+    background: var(--light-gray);
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-red);
+    box-shadow: var(--shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--pure-black);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="datetime-local"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 5px rgba(213, 0, 0, 0.2);
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+button {
+    background-color: var(--primary-red);
+    color: var(--white);
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: var(--pure-black);
+    transform: translateY(-2px);
+}
+
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================
+   GRID DE AULAS (SOLICITUD ESPECÍFICA)
+   ========================================= */
+/* Contenedor del Grid */
+.grid-aulas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo: crea columnas según quepan */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Estilo de la Tarjeta (Card) */
+.aula-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-top: 5px solid var(--primary-red); /* Detalle rojo arriba */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición suave con rebote */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: default;
+}
+
+.aula-card h4 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--pure-black); /* Título negro inicialmente */
+    border-bottom: 2px solid var(--light-gray);
+    padding-bottom: 10px;
+    transition: color 0.3s;
+}
+
+.aula-card p {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: #555;
+    transition: color 0.3s;
+}
+
+/* Efecto Hover Solicitado */
+.aula-card:hover {
+    background-color: var(--primary-red);
+    transform: translateY(-10px); /* Sube la tarjeta */
+    border-color: var(--primary-red);
+}
+
+.aula-card:hover h4 {
+    color: var(--white); /* Título blanco */
+    border-bottom-color: rgba(255,255,255,0.3);
+}
+
+.aula-card:hover p {
+    color: var(--white); /* Texto blanco */
+}
+
+/* =========================================
+   TABLAS
+   ========================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+    background-color: var(--white);
+}
+
+table thead {
+    background-color: var(--pure-black);
+    color: var(--white);
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background-color: #ffebee; /* Rojo muy pálido al pasar el mouse por la fila */
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+    background-color: var(--pure-black);
+    color: var(--white);
+    padding: 40px 0;
+    text-align: center;
+    border-top: 5px solid var(--primary-red);
+}
+
+footer a {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/* =========================================
+   ESTILOS NUEVOS (LOGIN Y AYUDA)
+   ========================================= */
+
+/* --- Login --- */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-card {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    border-top: 6px solid var(--primary-red);
+    text-align: center;
+}
+
+.login-card form {
+    /* Reseteamos el estilo global de formulario para esta tarjeta específica */
+    border-left: none;
+    box-shadow: none;
+    padding: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.login-card h3 {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    color: var(--pure-black);
+}
+
+/* --- Botón de Ayuda (?) --- */
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--pure-black);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Override del padding global */
+    border: 2px solid var(--pure-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-circle:hover {
+    background-color: var(--white);
+    color: var(--primary-red);
+    border-color: var(--primary-red);
+    transform: rotate(90deg); /* Pequeña animación de giro */
+}
+
+/* Caja de información desplegable */
+.info-box {
+    background-color: #fff0f0; /* Fondo rojizo muy suave */
+    border-left: 5px solid var(--primary-red);
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
