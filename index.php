@@ -2,7 +2,7 @@
 session_start();
 
 // ===========================
-// BLOQUEO COMPLETO DE CACHÉ
+// BLOQUEO DE CACHÉ
 // ===========================
 header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -11,55 +11,84 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // =====================================
-// SI EL USUARIO YA ESTÁ LOGUEADO
+// 1. SI YA ESTÁ LOGUEADO, REDIRIGIR SEGÚN ROL
 // =====================================
-if (isset($_SESSION["id_estudiante"])) {
-    header("Location: aulas.php"); // ANTES: aulas.html (mal)
-    exit;
+if (isset($_SESSION["rol"])) {
+    if ($_SESSION["rol"] === "admin") {
+        header("Location: vista_admin.php");
+        exit;
+    } elseif ($_SESSION["rol"] === "estudiante") {
+        header("Location: aulas.php");
+        exit;
+    }
 }
 
 // =====================================
-// PROCESAR LOGIN DESDE ESTE MISMO INDEX
+// 2. PROCESAR LOGIN
 // =====================================
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     require "conexion.php";
 
-    $correo = trim($_POST["correo"]);
-    $password = $_POST["password"];
+    $input_usuario = trim($_POST["correo"]); // Sirve para correo o usuario
+    $password      = $_POST["password"];
 
-    // Buscar estudiante
-    $stmt = $conexion->prepare("SELECT * FROM Estudiantes WHERE correo_institucional = ?");
-    $stmt->bind_param("s", $correo);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+    // ---------------------------------------------------------
+    // A) BUSCAR PRIMERO EN ADMINISTRADORES
+    // ---------------------------------------------------------
+    $stmt_admin = $conexion->prepare("SELECT * FROM administradores WHERE usuario = ?");
+    $stmt_admin->bind_param("s", $input_usuario);
+    $stmt_admin->execute();
+    $res_admin = $stmt_admin->get_result();
 
-    if ($resultado->num_rows === 1) {
-        $usuario = $resultado->fetch_assoc();
+    if ($res_admin->num_rows === 1) {
+        $admin = $res_admin->fetch_assoc();
 
-        if (password_verify($password, $usuario["contrasena"])) {
+        // NOTA: Si en tu BD la contraseña NO está encriptada, usa: 
+        // if ($password === $admin["contrasena"]) {
+        if ($password === $admin["contrasena"]) {
+            
+            $_SESSION["id_usuario"] = $admin["id_admin"];
+            $_SESSION["nombre"]     = $admin["usuario"];
+            $_SESSION["rol"]        = "admin"; // <--- ROL ADMIN
 
-            // Crear sesión
-            $_SESSION["id_estudiante"] = $usuario["id_estudiante"];
-            $_SESSION["nombre"]        = $usuario["nombre"];
-            $_SESSION["apellido"]      = $usuario["apellido"];
-            $_SESSION["correo"]        = $usuario["correo_institucional"];
-
-            header("Location: aulas.php"); // ANTES enviaba de regreso al index
+            header("Location: vista_admin.php");
             exit;
-
         } else {
-            $_SESSION["error"] = "Contraseña incorrecta.";
+            $_SESSION["error"] = "Contraseña de administrador incorrecta.";
         }
+    } 
+    // ---------------------------------------------------------
+    // B) SI NO ES ADMIN, BUSCAR EN ESTUDIANTES
+    // ---------------------------------------------------------
+    else {
+        $stmt_est = $conexion->prepare("SELECT * FROM Estudiantes WHERE correo_institucional = ?");
+        $stmt_est->bind_param("s", $input_usuario);
+        $stmt_est->execute();
+        $res_est = $stmt_est->get_result();
 
-    } else {
-        $_SESSION["error"] = "El correo no está registrado.";
+        if ($res_est->num_rows === 1) {
+            $usuario = $res_est->fetch_assoc();
+
+            if (password_verify($password, $usuario["contrasena"])) {
+                
+                $_SESSION["id_usuario"] = $usuario["id_estudiante"];
+                $_SESSION["nombre"]     = $usuario["nombre"];
+                $_SESSION["rol"]        = "estudiante"; // <--- ROL ESTUDIANTE
+
+                header("Location: aulas.php");
+                exit;
+            } else {
+                $_SESSION["error"] = "Contraseña de estudiante incorrecta.";
+            }
+        } else {
+            $_SESSION["error"] = "Usuario o correo no registrado.";
+        }
     }
-
-    header("Location: index.php");
-    exit;
+    
+    // Evitamos el header("Location: index.php") aquí para no perder la variable $_SESSION["error"]
+    // El script continuará y mostrará el HTML de abajo con el error.
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -68,11 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Iniciar Sesión | IUJO</title>
     <link rel="stylesheet" href="estilos.css">
-
-    <!-- Meta reforzado anti-caché -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
 </head>
 
 <body>
@@ -103,14 +127,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <p style="color:red; font-weight:bold;">
                     <?php echo $_SESSION["error"]; ?>
                 </p>
-                <?php unset($_SESSION["error"]); ?>
+                <?php unset($_SESSION["error"]); // Borrar error tras mostrarlo ?>
             <?php endif; ?>
 
             <form method="POST" action="index.php">
 
-                <label for="correo">Correo institucional:</label>
-                <input type="email" id="correo" name="correo"
-                       placeholder="usuario@correo.edu" required>
+                <!-- IMPORTANTE: Cambiado a type="text" y etiqueta actualizada -->
+                <label for="correo">Correo o Usuario:</label>
+                <input type="text" id="correo" name="correo"
+                       placeholder="usuario admin o correo institucional" required>
 
                 <br>
 
