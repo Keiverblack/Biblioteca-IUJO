@@ -50,7 +50,7 @@ if (!isset($_SESSION["rol"]) || $_SESSION["rol"] !== "admin") {
             <!-- Aquí pones el contenido que solo tú puedes ver -->
             <button>Ver lista de Estudiantes</button>
             <button>Ver Registros de Aulas</button>
-            <button>Gestionar Reservas</button>
+            <button>Reporte</button>
             <button><a href="logout.php">Cerrar Sesión</a></button>
             <br><br>
             <h3>Bienvenido, <?php echo $_SESSION["nombre"]; ?></h3>
