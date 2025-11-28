@@ -48,10 +48,10 @@ if (!isset($_SESSION["rol"]) || $_SESSION["rol"] !== "admin") {
     <main role="main"> 
         <div class="opciones-admin">
             <!-- Aquí pones el contenido que solo tú puedes ver -->
-            <button>Ver lista de Estudiantes</button>
-            <button>Ver Registros de Aulas</button>
-            <button>Reporte</button>
-            <button><a href="logout.php">Cerrar Sesión</a></button>
+            <button><a href="logout.php" style="color: #f4f4f4; border: none" >Ver lista de Estudiantes</a></button>
+            <button><a href="logout.php" style="color: #f4f4f4; border: none">Ver Registros de Aulas</a></button>
+            <button><a href="logout.php" style="color: #f4f4f4; border: none">Reporte</a></button>
+            <button><a href="logout.php" style="color: #f4f4f4; border: none">Cerrar Sesión</a></button>
             <br><br>
             <h3>Bienvenido, <?php echo $_SESSION["nombre"]; ?></h3>
         </div>

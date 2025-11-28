@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2025 a las 01:00:53
+-- Tiempo de generación: 28-11-2025 a las 01:50:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,9 +30,15 @@ SET time_zone = "+00:00";
 CREATE TABLE `administradores` (
   `id_admin` int(11) NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `contrasena` varchar(255) NOT NULL,
-  `rol` enum('bibliotecario','superadmin') DEFAULT 'bibliotecario'
+  `contrasena` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `administradores`
+--
+
+INSERT INTO `administradores` (`id_admin`, `usuario`, `contrasena`) VALUES
+(1, 'keiveradmin@iujo.edu.ve', 'kei123');
 
 -- --------------------------------------------------------
 
@@ -148,7 +154,7 @@ ALTER TABLE `reservas`
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `aulas`
