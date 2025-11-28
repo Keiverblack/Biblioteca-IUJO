@@ -30,66 +30,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     require "conexion.php";
 
-    $input_usuario = trim($_POST["correo"]); // Sirve para correo o usuario
+    $input_usuario = trim($_POST["correo"]);
     $password      = $_POST["password"];
 
-    // ---------------------------------------------------------
-    // A) BUSCAR PRIMERO EN ADMINISTRADORES
-    // ---------------------------------------------------------
-    $stmt_admin = $conexion->prepare("SELECT * FROM administradores WHERE usuario = ?");
-    $stmt_admin->bind_param("s", $input_usuario);
-    $stmt_admin->execute();
-    $res_admin = $stmt_admin->get_result();
+    // ===========================================
+    // A) ADMIN HARDCODEADO (SIN TABLA)
+    // ===========================================
+    $admin_user = "admin@iujo.edu.ve";
+    $admin_pass = "admin123"; // cámbiala si quieres
 
-    if ($res_admin->num_rows === 1) {
-        $admin = $res_admin->fetch_assoc();
+    if ($input_usuario === $admin_user && $password === $admin_pass) {
+        $_SESSION["id_usuario"] = 0;
+        $_SESSION["nombre"]     = "Administrador";
+        $_SESSION["rol"]        = "admin";
 
-        // NOTA: Si en tu BD la contraseña NO está encriptada, usa: 
-        // if ($password === $admin["contrasena"]) {
-        if ($password === $admin["contrasena"]) {
-            
-            $_SESSION["id_usuario"] = $admin["id_admin"];
-            $_SESSION["nombre"]     = $admin["usuario"];
-            $_SESSION["rol"]        = "admin"; // <--- ROL ADMIN
-
-            header("Location: vista_admin.php");
-            exit;
-        } else {
-            $_SESSION["error"] = "Contraseña de administrador incorrecta.";
-        }
-    } 
-    // ---------------------------------------------------------
-    // B) SI NO ES ADMIN, BUSCAR EN ESTUDIANTES
-    // ---------------------------------------------------------
-    else {
-        $stmt_est = $conexion->prepare("SELECT * FROM Estudiantes WHERE correo_institucional = ?");
-        $stmt_est->bind_param("s", $input_usuario);
-        $stmt_est->execute();
-        $res_est = $stmt_est->get_result();
-
-        if ($res_est->num_rows === 1) {
-            $usuario = $res_est->fetch_assoc();
-
-            if (password_verify($password, $usuario["contrasena"])) {
-                
-                $_SESSION["id_usuario"] = $usuario["id_estudiante"];
-                $_SESSION["nombre"]     = $usuario["nombre"];
-                $_SESSION["rol"]        = "estudiante"; // <--- ROL ESTUDIANTE
-
-                header("Location: aulas.php");
-                exit;
-            } else {
-                $_SESSION["error"] = "Contraseña de estudiante incorrecta.";
-            }
-        } else {
-            $_SESSION["error"] = "Usuario o correo no registrado.";
-        }
+        header("Location: vista_admin.php");
+        exit;
     }
-    
-    // Evitamos el header("Location: index.php") aquí para no perder la variable $_SESSION["error"]
-    // El script continuará y mostrará el HTML de abajo con el error.
+
+    // ===========================================
+    // B) SI NO ES ADMIN → BUSCAMOS ESTUDIANTE
+    // ===========================================
+    $stmt = $conexion->prepare("SELECT * FROM estudiantes WHERE correo_institucional = ?");
+    $stmt->bind_param("s", $input_usuario);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($res->num_rows === 1) {
+
+        $usuario = $res->fetch_assoc();
+
+        if (password_verify($password, $usuario["contrasena"])) {
+
+            $_SESSION["id_usuario"] = $usuario["id_estudiante"];
+            $_SESSION["nombre"]     = $usuario["nombre"];
+            $_SESSION["rol"]        = "estudiante";
+
+            header("Location: aulas.php");
+            exit;
+
+        } else {
+            $_SESSION["error"] = "Contraseña incorrecta.";
+        }
+
+    } else {
+        $_SESSION["error"] = "Usuario no registrado.";
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -133,14 +122,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <form method="POST" action="index.php">
 
                 <!-- IMPORTANTE: Cambiado a type="text" y etiqueta actualizada -->
-                <label for="correo">Correo o Usuario:</label>
+                <label for="correo">Correo:</label>
                 <input type="text" id="correo" name="correo"
-                       placeholder="usuario admin o correo institucional" required>
+                       placeholder="Ingresar su Correo institucional" required>
 
                 <br>
 
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password"  placeholder="Ingrese su contraseña" required>
 
                 <br>
 

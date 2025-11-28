@@ -9,7 +9,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // Si NO hay sesión → redirigir
-if (!isset($_SESSION["id_estudiante"])) {
+if (!isset($_SESSION["rol"]) || $_SESSION["rol"] !== "estudiante") {
     header("Location: index.php");
     exit;
 }
@@ -65,6 +65,9 @@ if (!isset($_SESSION["id_estudiante"])) {
         <hr>
 
         <section id="aulas" style="padding: 20px;">
+            <p style="font-size:18px; font-weight:bold;">
+    Bienvenido, <?php echo htmlspecialchars($_SESSION["nombre"]); ?> 👋
+</p>    
 
             <h2>Aulas y Espacios</h2>
 

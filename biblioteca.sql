@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2025 a las 01:50:40
+-- Tiempo de generación: 28-11-2025 a las 03:29:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,25 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `biblioteca`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `administradores`
---
-
-CREATE TABLE `administradores` (
-  `id_admin` int(11) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
-  `contrasena` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `administradores`
---
-
-INSERT INTO `administradores` (`id_admin`, `usuario`, `contrasena`) VALUES
-(1, 'keiveradmin@iujo.edu.ve', 'kei123');
 
 -- --------------------------------------------------------
 
@@ -87,7 +68,11 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_estudiante`, `cedula`, `nombre`, `apellido`, `correo_institucional`, `carrera`, `contrasena`) VALUES
-(1, '31694238', 'keiver', 'blanco', 'keiver@gmail.com', 'Informática', '$2y$10$3KzPLbhPiOpoT89uPGPpJe1B/ZsE5MMQe3vmjiZ5tRS3HXPC/Ani6');
+(1, '31694238', 'keiver', 'blanco', 'keiver@gmail.com', 'Informática', '$2y$10$3KzPLbhPiOpoT89uPGPpJe1B/ZsE5MMQe3vmjiZ5tRS3HXPC/Ani6'),
+(2, 'v-2313123123', 'Samuel', 'Cubano', 's@g.com', 'Informática', '$2y$10$qFlG2qt0aRgu7LUHbQsUvOnNyo6NGjgfirJ9WX3LXkIiSs/loTOcG'),
+(3, '32935820', 'Samuel', 'Cubano', 'keiver@g.com', 'Informática', '$2y$10$5R9Bd0U0koGebPY0wywIm.bARyJzAhrrj2KL7.Akaxz8PFQrknI0K'),
+(4, '123123123', 'JOSEITO', 'perez', '123@g.com', 'Mecánica', '$2y$10$cyUcgBOq.U98A2uQTea/4e9yavaEMdYGTzFqXHz/UCax9O3ezajYO'),
+(5, '443423424', 'Cristiano Ronaldo', 'Dos Santos', 'siuu@gmail.com', 'Contaduría', '$2y$10$AKhxyxnizJTjsoNxoSb9n.JikjnQybFtKi2r3oOM3f0JnpzBHOgcG');
 
 -- --------------------------------------------------------
 
@@ -118,13 +103,6 @@ INSERT INTO `reservas` (`id_reserva`, `id_estudiante`, `id_aula`, `fecha_reserva
 --
 
 --
--- Indices de la tabla `administradores`
---
-ALTER TABLE `administradores`
-  ADD PRIMARY KEY (`id_admin`),
-  ADD UNIQUE KEY `usuario` (`usuario`);
-
---
 -- Indices de la tabla `aulas`
 --
 ALTER TABLE `aulas`
@@ -151,12 +129,6 @@ ALTER TABLE `reservas`
 --
 
 --
--- AUTO_INCREMENT de la tabla `administradores`
---
-ALTER TABLE `administradores`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT de la tabla `aulas`
 --
 ALTER TABLE `aulas`
@@ -166,7 +138,7 @@ ALTER TABLE `aulas`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas`
